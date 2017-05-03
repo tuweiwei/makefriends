@@ -91,7 +91,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <a href="./member/weiBo.jsp">就业创业</a>
               <a href="./member/myDiary.jsp">二手市场</a>
               <a href="./member/myDiary.jsp">关于我们</a>
-              <a href="./member/myDiary.jsp">投诉建议</a>
             </td>
             </tr>
           </tbody>

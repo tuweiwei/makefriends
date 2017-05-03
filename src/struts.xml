@@ -14,7 +14,7 @@
 	<!-- 开启静态方法的访问 -->
 	<constant name="struts.ognl.allowStaticMethodAccess" value="true"></constant>
 	
-	<package name="member" extends="struts-default" >
+	<package name="member" extends="struts-default" namespace="/member">
 	 <action name="register" class="com.briup.run.web.action.RegisterAction">
 	  <result name="success" type="redirectAction">
 	       <param name="namespace">/member</param>
