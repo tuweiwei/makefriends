@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+    <constant name="struts.devMode" value="true" />
+	<constant name="struts.action.extension" value="action"></constant>
+   	<constant name="struts.i18n.encoding" value="utf8"></constant> 
+   	<!-- 
+	<constant name="struts.objectFactory" value="org.apache.struts2.spring.StrutsSpringObjectFactory"></constant>
+	-->
+	<!-- 开启静态方法的访问 -->
+	<constant name="struts.ognl.allowStaticMethodAccess" value="true"></constant>
+	
+	<package name="member" extends="struts-default" >
+	 <action name="register" class="com.briup.run.web.action.RegisterAction">
+	  <result name="success" type="redirectAction">
+	       <param name="namespace">/member</param>
+		   <param name="actionName">query</param>
+        </result>
+	  <result name="failed">../register.jsp</result>
+	 </action>
+	 
+	 <action name="Login" class="com.briup.run.web.action.LoginAction">
+	  <result name="success">activity.jsp</result>
+	  <result name="failed">../main.jsp</result>
+	 </action>
+	 
+	 <action name="modifypassword" class="com.briup.run.web.action.memberinfoAction" method="modifypassword">
+	   <result name="success">modifypassword.jsp</result>
+	   <result name="failed">modifypassword.jsp</result>
+	 </action>
+	 
+	 <action name="modifyMemberinfo" class="com.briup.run.web.action.memberinfoAction" method="modifyMemberinfo">
+	 <result name="success">modifyMemberinfo.jsp</result>
+	   <result name="failed">modifyMemberinfo.jsp</result>
+	 </action>
+	 
+	  <action name="upload" class="com.briup.run.web.action.upLoadAction">
+           <interceptor-ref name="fileUpload">
+             <param name="maximumSize">1000000000</param>  
+           </interceptor-ref> 
+           <interceptor-ref name="defaultStack"></interceptor-ref>
+           <param name="savePath">/save</param>
+           <result name="success">myPhoto.jsp</result>
+           <result name="failed">myPhoto.jsp</result>
+        </action>
+        
+        <action name="deletePhoto" class="com.briup.run.web.action.deletePhotoAction">
+         <result name="success">myPhoto.jsp</result>
+           <result name="failed">myPhoto.jsp</result>
+        </action>
+        
+        <action name="photoAlbum" class="com.briup.run.web.action.memberinfoAction" method="photoAlbum">
+         <result name="success">photoAlbum.jsp</result>
+         <result name="failed">photoAlbum.jsp</result>
+        </action>
+        
+        <action name="uploadPhotos" class="com.briup.run.web.action.upLoadPhotosAction">
+           <interceptor-ref name="fileUpload">
+             <param name="maximumSize">1000000000</param>  
+           </interceptor-ref> 
+           <interceptor-ref name="defaultStack"></interceptor-ref>
+           <param name="savePath">/save</param>
+           <result name="success" type="redirectAction">
+	       <param name="namespace">/member</param>
+		   <param name="actionName">photoAlbum</param>
+        </result>
+        </action>
+        
+        <action name="deletePhotoAlbum" class="com.briup.run.web.action.memberinfoAction" method="deletePhotoAlbum">
+        <result name="success" type="redirectAction">
+	       <param name="namespace">/member</param>
+		   <param name="actionName">photoAlbum</param>
+        </result>
+        </action>
+        
+        <action name="myDiary" class="com.briup.run.web.action.memberinfoAction" method="myDiary">
+          <result name="success">myDiary.jsp</result>
+          <result name="failed">myDiary.jsp</result>
+        </action>
+        
+        <action name="addDiary" class="com.briup.run.web.action.memberinfoAction" method="addDiary">
+         <result name="success" type="redirectAction">
+	       <param name="namespace">/member</param>
+		   <param name="actionName">myDiary</param>
+        </result>
+        <result name="failed">
+         publishMyDiary.jsp
+        </result>
+        </action>
+        
+        <action name="query" class="com.briup.run.web.action.queryAction">
+          <result name="success">../main.jsp</result>
+           <result name="failed">../main.jsp</result>
+        </action>
+        
+        <action name="diaryDetail" class="com.briup.run.web.action.memberinfoAction" method="diaryDetail">
+          <result name="success">diaryDeatil.jsp</result>
+           <result name="failed">myDiary.jsp</result>
+        </action>
+        
+        <action name="deleteDiary" class="com.briup.run.web.action.memberinfoAction" method="deleteDiary">
+         <result name="success" type="redirectAction">
+	       <param name="namespace">/member</param>
+		   <param name="actionName">myDiary</param>
+        </result>
+         <result name="failed" type="redirectAction">
+	       <param name="namespace">/member</param>
+		   <param name="actionName">myDiary</param>
+        </result>
+        </action>
+        
+        <action name="receiveBox" class="com.briup.run.web.action.memberinfoAction" method="receiveBox">
+         <result name="success">receiveBox.jsp</result>
+           <result name="failed">receiveBox.jsp</result>
+        </action>
+        
+        <action name="sendBox" class="com.briup.run.web.action.memberinfoAction" method="sendBox">
+         <result name="success">sendBox.jsp</result>
+           <result name="failed">sendBox.jsp</result>
+        </action>
+        
+        <action name="writeBox" class="com.briup.run.web.action.memberinfoAction" method="sendEmail">
+         <result name="success" type="redirectAction">
+         <param name="namespace">/member</param>
+		   <param name="actionName">sendBox</param>
+         </result>
+         <result name="failed">writeBox.jsp</result>
+        </action>
+        
+        <action name="deleteEmail" class="com.briup.run.web.action.memberinfoAction" method="deleteEmail">
+        <result name="success" type="redirectAction">
+        <param name="namespace">/member</param>
+         <param name="actionName">sendBox</param>
+        </result>
+        <result name="failed" type="redirectAction">
+        <param name="namespace">/member</param>
+         <param name="actionName">sendBox</param>
+        </result>
+        </action>
+        
+        
+        <action name="emailDetail" class="com.briup.run.web.action.memberinfoAction" method="emailDetail">
+         <result name="success">emailDetail.jsp</result>
+         <result name="failed">emailDetail.jsp</result>
+        </action>
+        
+        <action name="weibo" class="com.briup.run.web.action.memberinfoAction" method="weibo">
+         <result name="success" type="redirectAction">
+          <param name="namespace">/member</param>
+          <param name="actionName">lookweibo</param>
+         </result>
+         <result name="failed">weiBo.jsp</result>
+        </action>
+        
+        <action name="lookweibo" class="com.briup.run.web.action.memberinfoAction" method="weiboList">
+        <result name="success">weiBo.jsp</result>
+         <result name="failed">weiBo.jsp</result>
+        </action>
+        
+        <action name="memberListInfo" class="com.briup.run.web.action.memberinfoAction" method="memberListInfo">
+         <result name="success">memberListInfo.jsp</result>
+          <result name="failed">memberListInfo.jsp</result>
+        </action>
+        
+        <action name="addAttion" class="com.briup.run.web.action.memberinfoAction" method="addAttion">
+         <result name="success">memberListInfo.jsp</result>
+         <result name="failed">memberListInfo.jsp</result>
+        </action>
+        
+        <action name="myAttention" class="com.briup.run.web.action.memberinfoAction" method="myAttention">
+         <result name="success">myAttention.jsp</result>
+         <result name="failed">myAttention.jsp</result>
+        </action>
+        
+        <action name="deleteAttention" class="com.briup.run.web.action.memberinfoAction" method="deleteAttention">
+         <result name="success" type="redirectAction">
+          <param name="namespace">/member</param>
+          <param name="actionName">myAttention</param>
+         </result>
+         <result name="failed">myAttention.jsp</result>
+        </action>
+        
+        <action name="meLookwho" class="com.briup.run.web.action.memberinfoAction" method="meLookwho">
+         <result name="success">meLookwho.jsp</result>
+         <result name="failed">meLookwho.jsp</result>
+        </action>
+        
+        <action name="whoLookme" class="com.briup.run.web.action.memberinfoAction" method="whoLookme">
+         <result name="success">whoLookme.jsp</result>
+         <result name="failed">whoLookme.jsp</result>
+        </action>
+        
+        <action name="deleteWhoLookMe" class="com.briup.run.web.action.memberinfoAction" method="deleteWhoLookMe">
+        <result name="success" type="redirectAction">
+          <param name="namespace">/member</param>
+          <param name="actionName">whoLookme</param>
+         </result>
+         <result name="failed">whoLookme.jsp</result>
+        </action>
+        
+        <action name="deleteMeLookWho" class="com.briup.run.web.action.memberinfoAction" method="deleteMeLookWho">
+        <result name="success" type="redirectAction">
+          <param name="namespace">/member</param>
+          <param name="actionName">meLookwho</param>
+         </result>
+         <result name="failed">meLookwho.jsp</result>
+        
+        </action>
+	</package>
+</struts>

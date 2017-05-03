@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" 
+	xmlns="http://java.sun.com/xml/ns/javaee" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+	
+  <display-name>run</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+	<!-- spring的一个监听器 负责读取spring的配置文件 -->
+    <listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<!-- 给spring的监听器传需要读取的文件路径 -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:spring_*.xml</param-value>
+	</context-param>
+
+	
+	<!-- 这个配置让spring帮我们时刻打开着session -->
+	<filter>
+		<filter-name>hibernateFilter</filter-name>
+		<filter-class>org.springframework.orm.hibernate3.support.OpenSessionInViewFilter</filter-class>
+		<init-param>
+			<param-name>singleSession</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>hibernateFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+
+	<!-- 配置struts2的filter -->
+	<filter>
+		<filter-name>struts2</filter-name>
+		<filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>struts2</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<!-- 配置生成验证码的一个servlet -->
+	<servlet>
+		<servlet-name>authImg</servlet-name>
+		<servlet-class>com.briup.run.web.servlet.AuthImg</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>authImg</servlet-name>
+		<url-pattern>/AuthImg</url-pattern>	
+	</servlet-mapping>
+	
+	<!-- 配置注册的验证 -->
+	  <servlet>
+	  <servlet-name>register</servlet-name>
+	  <servlet-class>com.briup.run.web.servlet.Register</servlet-class>
+	  </servlet>
+	  <servlet-mapping>
+	  <servlet-name>register</servlet-name>
+	  <url-pattern>/Register</url-pattern>
+	  </servlet-mapping>
+	
+	
+</web-app>

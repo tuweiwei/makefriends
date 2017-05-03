@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xmlns:aop="http://www.springframework.org/schema/aop"
+     xmlns:tx="http://www.springframework.org/schema/tx"
+     xsi:schemaLocation="
+     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+    <!-- 配置特定的事物管理类,该类专门由Spring提供 -->
+   <bean id="txManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+   		<property name="sessionFactory" ref="sessionFactory"></property>
+   </bean>
+    <!-- 配置事务管理advice -->
+   <tx:advice id="txAdvice" transaction-manager="txManager">
+	<!-- 配置事务的属性 -->
+   	<tx:attributes>
+   		<tx:method name="find*" read-only="true"/>
+   		<tx:method name="*" propagation="REQUIRED"/>
+   	</tx:attributes>
+   </tx:advice>
+   <!-- aop切面配置 -->
+   <aop:config>
+	<!-- 配置切入点   切入点作用:规定通知/拦截器需要在哪些方法上面起作用-->
+   	<aop:pointcut expression="execution ( * com.briup.run.service.impl.*.*(..))" id="serviceCut"/>
+	<!-- 告诉spring 哪一个advice在哪一个切入点上面起作用 -->
+   	<aop:advisor advice-ref="txAdvice" pointcut-ref="serviceCut"/>
+   </aop:config>	 
+    
+   <!-- 配置Service (拿代理对象的时候直接用这个名字就行) -->
+   <bean id="memberService" class="com.briup.run.service.impl.MemberServiceImpl">
+   		<property name="memberDao" ref="memberDao"></property>
+   </bean>
+   <bean id="messengerService" class="com.briup.run.service.impl.MessengerServiceImpl">
+   		<property name="memberDao" ref="memberDao"></property>
+   		<property name="messengerDao" ref="messengerDao"></property>
+   </bean>
+</beans>
