@@ -3,7 +3,7 @@
     <wb-module deploy-name="friends">
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
         <wb-resource deploy-path="/" source-path="/WebContent"/>
-        <property name="context-root" value="friends"/>
         <property name="java-output-path" value="/friends/build/classes"/>
+        <property name="context-root" value="makefriends"/>
     </wb-module>
 </project-modules>
